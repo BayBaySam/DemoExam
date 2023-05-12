@@ -1,0 +1,429 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище DemoModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="EdinIzmer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EdinIzmereniya" Type="nvarchar" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Material">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Tip" Type="int" Nullable="false" />
+          <Property Name="Image" Type="nvarchar(max)" />
+          <Property Name="Price" Type="int" Nullable="false" />
+          <Property Name="KolVoNaSklad" Type="int" Nullable="false" />
+          <Property Name="MinKol" Type="int" Nullable="false" />
+          <Property Name="KolvoUpakov" Type="int" Nullable="false" />
+          <Property Name="EdIzm" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Postavki">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDMaterial" Type="int" Nullable="false" />
+          <Property Name="IDPostavshik" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Postavshiki">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TipPostav" Type="int" Nullable="false" />
+          <Property Name="INN" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Reiting" Type="int" Nullable="false" />
+          <Property Name="DataNachalaRabot" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TipMaterial">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tip" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TipPostavshika">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tip" Type="nvarchar" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Material_EdinIzmer">
+          <End Role="EdinIzmer" Type="Self.EdinIzmer" Multiplicity="1" />
+          <End Role="Material" Type="Self.Material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EdinIzmer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Material">
+              <PropertyRef Name="EdIzm" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Material_TipMaterial">
+          <End Role="TipMaterial" Type="Self.TipMaterial" Multiplicity="1" />
+          <End Role="Material" Type="Self.Material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipMaterial">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Material">
+              <PropertyRef Name="Tip" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Postavki_Material">
+          <End Role="Material" Type="Self.Material" Multiplicity="1" />
+          <End Role="Postavki" Type="Self.Postavki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Postavki">
+              <PropertyRef Name="IDMaterial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Postavki_Postavshiki">
+          <End Role="Postavshiki" Type="Self.Postavshiki" Multiplicity="1" />
+          <End Role="Postavki" Type="Self.Postavki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Postavshiki">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Postavki">
+              <PropertyRef Name="IDPostavshik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Postavshiki_TipPostavshika">
+          <End Role="TipPostavshika" Type="Self.TipPostavshika" Multiplicity="1" />
+          <End Role="Postavshiki" Type="Self.Postavshiki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipPostavshika">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Postavshiki">
+              <PropertyRef Name="TipPostav" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище DemoModelContainer">
+          <EntitySet Name="EdinIzmer" EntityType="Self.EdinIzmer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Material" EntityType="Self.Material" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Postavki" EntityType="Self.Postavki" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Postavshiki" EntityType="Self.Postavshiki" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipMaterial" EntityType="Self.TipMaterial" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipPostavshika" EntityType="Self.TipPostavshika" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Material_EdinIzmer" Association="Self.FK_Material_EdinIzmer">
+            <End Role="EdinIzmer" EntitySet="EdinIzmer" />
+            <End Role="Material" EntitySet="Material" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Material_TipMaterial" Association="Self.FK_Material_TipMaterial">
+            <End Role="TipMaterial" EntitySet="TipMaterial" />
+            <End Role="Material" EntitySet="Material" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Postavki_Material" Association="Self.FK_Postavki_Material">
+            <End Role="Material" EntitySet="Material" />
+            <End Role="Postavki" EntitySet="Postavki" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Postavki_Postavshiki" Association="Self.FK_Postavki_Postavshiki">
+            <End Role="Postavshiki" EntitySet="Postavshiki" />
+            <End Role="Postavki" EntitySet="Postavki" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Postavshiki_TipPostavshika" Association="Self.FK_Postavshiki_TipPostavshika">
+            <End Role="TipPostavshika" EntitySet="TipPostavshika" />
+            <End Role="Postavshiki" EntitySet="Postavshiki" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DemoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="EdinIzmer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EdinIzmereniya" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Material" Relationship="Self.FK_Material_EdinIzmer" FromRole="EdinIzmer" ToRole="Material" />
+        </EntityType>
+        <EntityType Name="Material">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Tip" Type="Int32" Nullable="false" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <Property Name="KolVoNaSklad" Type="Int32" Nullable="false" />
+          <Property Name="MinKol" Type="Int32" Nullable="false" />
+          <Property Name="KolvoUpakov" Type="Int32" Nullable="false" />
+          <Property Name="EdIzm" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EdinIzmer" Relationship="Self.FK_Material_EdinIzmer" FromRole="Material" ToRole="EdinIzmer" />
+          <NavigationProperty Name="TipMaterial" Relationship="Self.FK_Material_TipMaterial" FromRole="Material" ToRole="TipMaterial" />
+          <NavigationProperty Name="Postavki" Relationship="Self.FK_Postavki_Material" FromRole="Material" ToRole="Postavki" />
+        </EntityType>
+        <EntityType Name="Postavki">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDMaterial" Type="Int32" Nullable="false" />
+          <Property Name="IDPostavshik" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Material" Relationship="Self.FK_Postavki_Material" FromRole="Postavki" ToRole="Material" />
+          <NavigationProperty Name="Postavshiki" Relationship="Self.FK_Postavki_Postavshiki" FromRole="Postavki" ToRole="Postavshiki" />
+        </EntityType>
+        <EntityType Name="Postavshiki">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TipPostav" Type="Int32" Nullable="false" />
+          <Property Name="INN" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Reiting" Type="Int32" Nullable="false" />
+          <Property Name="DataNachalaRabot" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Postavki" Relationship="Self.FK_Postavki_Postavshiki" FromRole="Postavshiki" ToRole="Postavki" />
+          <NavigationProperty Name="TipPostavshika" Relationship="Self.FK_Postavshiki_TipPostavshika" FromRole="Postavshiki" ToRole="TipPostavshika" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TipMaterial">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tip" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Material" Relationship="Self.FK_Material_TipMaterial" FromRole="TipMaterial" ToRole="Material" />
+        </EntityType>
+        <EntityType Name="TipPostavshika">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tip" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Postavshiki" Relationship="Self.FK_Postavshiki_TipPostavshika" FromRole="TipPostavshika" ToRole="Postavshiki" />
+        </EntityType>
+        <Association Name="FK_Material_EdinIzmer">
+          <End Role="EdinIzmer" Type="Self.EdinIzmer" Multiplicity="1" />
+          <End Role="Material" Type="Self.Material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EdinIzmer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Material">
+              <PropertyRef Name="EdIzm" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Material_TipMaterial">
+          <End Role="TipMaterial" Type="Self.TipMaterial" Multiplicity="1" />
+          <End Role="Material" Type="Self.Material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipMaterial">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Material">
+              <PropertyRef Name="Tip" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Postavki_Material">
+          <End Role="Material" Type="Self.Material" Multiplicity="1" />
+          <End Role="Postavki" Type="Self.Postavki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Postavki">
+              <PropertyRef Name="IDMaterial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Postavki_Postavshiki">
+          <End Role="Postavshiki" Type="Self.Postavshiki" Multiplicity="1" />
+          <End Role="Postavki" Type="Self.Postavki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Postavshiki">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Postavki">
+              <PropertyRef Name="IDPostavshik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Postavshiki_TipPostavshika">
+          <End Role="TipPostavshika" Type="Self.TipPostavshika" Multiplicity="1" />
+          <End Role="Postavshiki" Type="Self.Postavshiki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipPostavshika">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Postavshiki">
+              <PropertyRef Name="TipPostav" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DemoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="EdinIzmer" EntityType="Self.EdinIzmer" />
+          <EntitySet Name="Material" EntityType="Self.Material" />
+          <EntitySet Name="Postavki" EntityType="Self.Postavki" />
+          <EntitySet Name="Postavshiki" EntityType="Self.Postavshiki" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="TipMaterial" EntityType="Self.TipMaterial" />
+          <EntitySet Name="TipPostavshika" EntityType="Self.TipPostavshika" />
+          <AssociationSet Name="FK_Material_EdinIzmer" Association="Self.FK_Material_EdinIzmer">
+            <End Role="EdinIzmer" EntitySet="EdinIzmer" />
+            <End Role="Material" EntitySet="Material" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Material_TipMaterial" Association="Self.FK_Material_TipMaterial">
+            <End Role="TipMaterial" EntitySet="TipMaterial" />
+            <End Role="Material" EntitySet="Material" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Postavki_Material" Association="Self.FK_Postavki_Material">
+            <End Role="Material" EntitySet="Material" />
+            <End Role="Postavki" EntitySet="Postavki" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Postavki_Postavshiki" Association="Self.FK_Postavki_Postavshiki">
+            <End Role="Postavshiki" EntitySet="Postavshiki" />
+            <End Role="Postavki" EntitySet="Postavki" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Postavshiki_TipPostavshika" Association="Self.FK_Postavshiki_TipPostavshika">
+            <End Role="TipPostavshika" EntitySet="TipPostavshika" />
+            <End Role="Postavshiki" EntitySet="Postavshiki" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище DemoModelContainer" CdmEntityContainer="DemoEntities">
+          <EntitySetMapping Name="EdinIzmer">
+            <EntityTypeMapping TypeName="DemoModel.EdinIzmer">
+              <MappingFragment StoreEntitySet="EdinIzmer">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="EdinIzmereniya" ColumnName="EdinIzmereniya" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Material">
+            <EntityTypeMapping TypeName="DemoModel.Material">
+              <MappingFragment StoreEntitySet="Material">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Tip" ColumnName="Tip" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="KolVoNaSklad" ColumnName="KolVoNaSklad" />
+                <ScalarProperty Name="MinKol" ColumnName="MinKol" />
+                <ScalarProperty Name="KolvoUpakov" ColumnName="KolvoUpakov" />
+                <ScalarProperty Name="EdIzm" ColumnName="EdIzm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Postavki">
+            <EntityTypeMapping TypeName="DemoModel.Postavki">
+              <MappingFragment StoreEntitySet="Postavki">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDMaterial" ColumnName="IDMaterial" />
+                <ScalarProperty Name="IDPostavshik" ColumnName="IDPostavshik" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Postavshiki">
+            <EntityTypeMapping TypeName="DemoModel.Postavshiki">
+              <MappingFragment StoreEntitySet="Postavshiki">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TipPostav" ColumnName="TipPostav" />
+                <ScalarProperty Name="INN" ColumnName="INN" />
+                <ScalarProperty Name="Reiting" ColumnName="Reiting" />
+                <ScalarProperty Name="DataNachalaRabot" ColumnName="DataNachalaRabot" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DemoModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipMaterial">
+            <EntityTypeMapping TypeName="DemoModel.TipMaterial">
+              <MappingFragment StoreEntitySet="TipMaterial">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Tip" ColumnName="Tip" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipPostavshika">
+            <EntityTypeMapping TypeName="DemoModel.TipPostavshika">
+              <MappingFragment StoreEntitySet="TipPostavshika">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Tip" ColumnName="Tip" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

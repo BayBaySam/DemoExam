@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b9e4481d2f384c77b0951b1975feb233" Name="Diagram1">
+        <EntityTypeShape EntityType="DemoModel.EdinIzmer" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DemoModel.Material" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DemoModel.Postavki" Width="1.5" PointX="5.25" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DemoModel.Postavshiki" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DemoModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DemoModel.TipMaterial" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DemoModel.TipPostavshika" Width="1.5" PointX="0.75" PointY="8.875" IsExpanded="true" />
+        <AssociationConnector Association="DemoModel.FK_Material_EdinIzmer" ManuallyRouted="false" />
+        <AssociationConnector Association="DemoModel.FK_Material_TipMaterial" ManuallyRouted="false" />
+        <AssociationConnector Association="DemoModel.FK_Postavki_Material" ManuallyRouted="false" />
+        <AssociationConnector Association="DemoModel.FK_Postavki_Postavshiki" ManuallyRouted="false" />
+        <AssociationConnector Association="DemoModel.FK_Postavshiki_TipPostavshika" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
